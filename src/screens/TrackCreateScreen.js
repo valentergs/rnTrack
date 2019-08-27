@@ -1,11 +1,32 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet } from "react-native";
+import { Text } from "react-native-elements";
+import { SafeAreaView } from "react-navigation";
+import { requestPermissionsAsync } from "expo-location";
+import Map from "../components/Map";
 
 const TrackCreateScreen = () => {
+  const [err, setErr] = useState(null);
+
+  const startWatching = async () => {
+    try {
+      // Esse comando server para confirmar se o usuário autorizou o APP a compartilhar localização.
+      await requestPermissionsAsync();
+    } catch (error) {
+      setErr(error);
+    }
+  };
+
+  useEffect(() => {
+    startWatching();
+  }, []);
+
   return (
-    <View>
-      <Text style={{ fontSize: 48 }}>TrackCreateScreen</Text>
-    </View>
+    <SafeAreaView forceInset={{ top: "always" }}>
+      <Text h2>Create a Track</Text>
+      <Map />
+      {err ? <Text>Please enable location services</Text> : null}
+    </SafeAreaView>
   );
 };
 

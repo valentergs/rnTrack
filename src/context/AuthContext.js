@@ -26,7 +26,7 @@ const tryLocalSignin = dispatch => async () => {
     // dispatch({ type: "signin", payload: token });
     navigate("TrackList");
   } else {
-    navigate("loginFlow");
+    navigate("Signin");
   }
 };
 
@@ -85,7 +85,6 @@ const signout = dispatch => async () => {
   } catch (error) {
     console.log(error);
   }
-  console.log("Token was removed!");
 };
 
 export const { Context, Provider } = createDataContext(
